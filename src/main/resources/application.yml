@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/entry?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    username: root
+    password: qpwoeiru1768
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+    defer-datasource-initialization: true
+  redis:
+    port: ${REDIS-PORT}
+    host: ${REDIS-HOST}
+
+jwt:
+  header:
+    alg: HS256
+    typ: JWT
+  prefix : "Bearer"
+  secret: "asdjflasjdfjalsdfjaslkdfjaslkdfjkal12#$!@#$!@#$!@#$!asdjfklasjdfklasjdlfkajsdlfkasld@#sadjfklasdjflasdf"
+  access-expiration: 100000
+
+logging:
+  level:
+    com.example : DEBUG
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
