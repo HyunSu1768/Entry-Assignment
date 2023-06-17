@@ -1,9 +1,9 @@
-package com.practice.board.domain.service;
+package com.practice.board.domain.service.like;
 
 import com.practice.board.domain.persistence.board.Board;
 import com.practice.board.domain.persistence.board.BoardRepository;
-import com.practice.board.domain.service.like.Like;
-import com.practice.board.domain.service.like.LikeRepository;
+import com.practice.board.domain.persistence.like.Like;
+import com.practice.board.domain.persistence.like.LikeRepository;
 import com.practice.board.domain.persistence.user.User;
 import com.practice.board.domain.service.exception.board.BoardNotFoundException;
 import com.practice.board.domain.service.exception.like.LikeAlreadyExistsException;
@@ -13,10 +13,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 @RequiredArgsConstructor
+@Transactional
 @Service
-public class LikeService {
+public class LikeServiceImpl implements LikeService {
 
     private final LikeRepository likeRepository;
 
@@ -24,6 +24,7 @@ public class LikeService {
 
     private final UserFacade userFacade;
 
+    @Override
     public void addLike(Long boardId){
 
         Board board = boardRepository.findById(boardId)
@@ -41,16 +42,13 @@ public class LikeService {
                         .build());
     }
 
+    @Override
     public void removeLike(Long boardId) {
 
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()->BoardNotFoundException.EXCEPTION);
 
         User curUser = userFacade.currentUser();
-
-        if(!likeRepository.existsByUserAndBoard(curUser, board)){
-            throw LikeDoesntExistsException.EXCEPTION;
-        }
 
         Like like = likeRepository.findByUserAndBoard(curUser, board)
                 .orElseThrow(()->LikeDoesntExistsException.EXCEPTION);

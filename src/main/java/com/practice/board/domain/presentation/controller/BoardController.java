@@ -3,7 +3,7 @@ package com.practice.board.domain.presentation.controller;
 import com.practice.board.domain.presentation.dto.request.BoardRequest;
 import com.practice.board.domain.presentation.dto.response.BoardIdResponse;
 import com.practice.board.domain.presentation.dto.response.BoardResponse;
-import com.practice.board.domain.service.BoardService;
+import com.practice.board.domain.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.*;
 import org.springframework.web.bind.annotation.*;

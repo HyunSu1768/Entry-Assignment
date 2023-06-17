@@ -1,7 +1,7 @@
 package com.practice.board.domain.persistence.board;
 
 import com.practice.board.domain.persistence.commnet.Comment;
-import com.practice.board.domain.service.like.Like;
+import com.practice.board.domain.persistence.like.Like;
 import com.practice.board.domain.persistence.user.User;
 import com.practice.board.global.common.entity.BaseTimeEntity;
 import lombok.*;

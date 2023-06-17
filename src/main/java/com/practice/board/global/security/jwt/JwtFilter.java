@@ -22,8 +22,6 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = jwtTokenProvider.resolveToken(request);
 
         if (token != null) {
-            // Jwt에 담긴 정보를 통해 어떤 유저가 로그인 되었는지 식별하고,
-            // Spring Security SecurityContextHolder를 통해 현재 요청에 유저의 정보를 등록한다.
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

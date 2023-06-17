@@ -1,6 +1,6 @@
 package com.practice.board.domain.presentation.controller;
 
-import com.practice.board.domain.service.LikeService;
+import com.practice.board.domain.service.like.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

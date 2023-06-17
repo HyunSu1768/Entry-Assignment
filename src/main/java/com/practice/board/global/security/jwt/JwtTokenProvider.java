@@ -20,7 +20,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private final String secretKey = "mukgenproject123!@#mukgenproject123!@#mukgenproject123!@#";
+    private final String secretKey = "entryassignment!@#$!@#$!@#$entryassignment!@#$!@#$!@#$entryassignment!@#$!@#$!@#$";
 
     private final String prefix = "Bearer ";
 
@@ -41,8 +41,6 @@ public class JwtTokenProvider {
                 .build();
     }
 
-
-    //JWT 토큰 생성
     private String createAccessToken(String accountId) {
         Date now = new Date();
         return Jwts.builder()
@@ -66,14 +64,11 @@ public class JwtTokenProvider {
         return rfToken;
     }
 
-
-    // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token){
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
         return new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities());
     }
 
-    //토큰에서 회원 정보 추출
     public String getUserPk(String token){
         try{
             return Jwts

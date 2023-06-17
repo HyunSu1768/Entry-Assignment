@@ -1,4 +1,4 @@
-package com.practice.board.domain.service;
+package com.practice.board.domain.service.board;
 
 import com.practice.board.domain.presentation.dto.request.BoardRequest;
 import com.practice.board.domain.presentation.dto.response.BoardIdResponse;
@@ -17,13 +17,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Transactional
-@Service
 @RequiredArgsConstructor
-public class BoardService {
+@Service
+public class BoardServiceImpl implements BoardService{
 
     private final BoardRepository boardRepository;
     private final UserFacade userFacade;
 
+    @Override
     public BoardIdResponse writeBoard(BoardRequest request) {
 
         User currentUser = userFacade.currentUser();
@@ -38,6 +39,7 @@ public class BoardService {
         return new BoardIdResponse(board.getId());
     }
 
+    @Override
     public void modifyBoard(Long boardId, BoardRequest request) {
 
         User currentUser = userFacade.currentUser();
@@ -50,6 +52,7 @@ public class BoardService {
         boardRepository.save(board);
     }
 
+    @Override
     public void deleteBoard(Long boardId) {
 
         User currentUser = userFacade.currentUser();
@@ -67,6 +70,7 @@ public class BoardService {
         }
     }
 
+    @Override
     public BoardResponse findBoard(Long boardId) {
 
         Board board = boardRepository.findById(boardId)
@@ -77,6 +81,7 @@ public class BoardService {
         return BoardResponse.of(board);
     }
 
+    @Override
     public List<BoardResponse> findAllBoards() {
 
         return boardRepository.findAll()
@@ -85,6 +90,7 @@ public class BoardService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<BoardResponse> findMyBoards() {
 
         User currentUser = userFacade.currentUser();
@@ -95,6 +101,7 @@ public class BoardService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<BoardResponse> searchBoard(String title) {
         return boardRepository.findByTitleContaining(title)
                 .stream()

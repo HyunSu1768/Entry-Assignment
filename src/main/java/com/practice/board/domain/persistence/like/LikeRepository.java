@@ -1,4 +1,4 @@
-package com.practice.board.domain.service.like;
+package com.practice.board.domain.persistence.like;
 
 import com.practice.board.domain.persistence.board.Board;
 import com.practice.board.domain.persistence.user.User;

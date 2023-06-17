@@ -1,6 +1,6 @@
 package com.practice.board.domain.presentation.dto.response;
 
-import com.practice.board.domain.service.like.Like;
+import com.practice.board.domain.persistence.like.Like;
 import lombok.Builder;
 import lombok.Getter;
 

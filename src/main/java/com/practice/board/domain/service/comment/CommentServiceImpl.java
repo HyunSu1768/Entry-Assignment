@@ -1,4 +1,4 @@
-package com.practice.board.domain.service;
+package com.practice.board.domain.service.comment;
 
 import com.practice.board.domain.persistence.board.Board;
 import com.practice.board.domain.persistence.board.BoardRepository;
@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 @Service
-public class CommentService {
+public class CommentServiceImpl implements CommentService{
 
     private final CommentRepository commentRepository;
 
@@ -25,11 +25,8 @@ public class CommentService {
 
     private final UserFacade userFacade;
 
-    @Transactional
-    public void addComment(
-            CommentRequest request,
-            Long boardId
-    ){
+    @Override
+    public void addComment(CommentRequest request, Long boardId){
 
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
@@ -42,11 +39,8 @@ public class CommentService {
 
     }
 
-    @Transactional
-    public void modifyComment(
-            CommentRequest commentRequest,
-            Long commentId
-    ){
+    @Override
+    public void modifyComment(CommentRequest commentRequest, Long commentId){
         User curUser = userFacade.currentUser();
 
         Comment comment = commentRepository.findById(commentId)
@@ -58,14 +52,14 @@ public class CommentService {
         comment.updateComment(commentRequest.getContent());
     }
 
-    @Transactional
+    @Override
     public void removeComment(Long commentId){
-        User curUser = userFacade.currentUser();
+        User user = userFacade.currentUser();
 
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(()->CommentNotFoundException.EXCEPTION);
 
-        if(!comment.getUser().equals(curUser)){
+        if(!comment.getUser().equals(user)){
             throw CommentWriterMismatchException.EXCEPTION;
         }
         commentRepository.delete(comment);

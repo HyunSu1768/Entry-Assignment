@@ -1,4 +1,4 @@
-package com.practice.board.domain.service.like;
+package com.practice.board.domain.persistence.like;
 
 import com.practice.board.domain.persistence.board.Board;
 import com.practice.board.domain.persistence.user.User;
@@ -13,17 +13,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@IdClass(LikeId.class)
 @Entity(name = "tbl_like")
 public class Like {
 
-    @Id @GeneratedValue
-    private Long id;
-
+    @Id
     @ManyToOne
     @JoinColumn(name = "board_id")
     private Board board;
 
+    @Id
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
 }

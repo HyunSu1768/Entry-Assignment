@@ -1,4 +1,4 @@
-package com.practice.board.domain.service;
+package com.practice.board.domain.service.user;
 
 import com.practice.board.domain.persistence.user.User;
 import com.practice.board.domain.persistence.user.UserRepository;
@@ -8,21 +8,23 @@ import com.practice.board.domain.service.exception.user.PasswordMismatchExceptio
 import com.practice.board.domain.service.exception.board.*;
 import com.practice.board.domain.service.exception.user.*;
 import com.practice.board.domain.service.facade.*;
-import com.practice.board.global.security.jwt.JwtProperties;
 import com.practice.board.global.security.jwt.JwtTokenProvider;
 import lombok.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
-@Service
+import javax.websocket.OnError;
+
 @RequiredArgsConstructor
-public class UserService {
+@Transactional
+@Service
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserFacade userFacade;
-    private final JwtProperties jwtProperties;
     private final JwtTokenProvider jwtTokenProvider;
 
+    @Override
     public void signup(SignUpRequest request) {
 
         if (userRepository.existsByUsername(request.getUsername())) {
@@ -38,6 +40,7 @@ public class UserService {
         );
     }
 
+    @Override
     @Transactional
     public TokenResponse login(LoginRequest request) {
 
@@ -51,6 +54,7 @@ public class UserService {
         return jwtTokenProvider.createToken(user.getUsername());
     }
 
+    @Override
     public UserInfoResponse getMyInfo() {
 
         User currentUser = userFacade.currentUser();
@@ -58,6 +62,7 @@ public class UserService {
         return new UserInfoResponse(currentUser);
     }
 
+    @Override
     public void changePassword(PasswordChangeRequest request) {
 
         User user = userFacade.currentUser();
